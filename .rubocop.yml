@@ -1,0 +1,23 @@
+AllCops:
+  Exclude:
+    - 'Vagrantfile'
+    - 'Berksfile'
+    - 'Gemfile'
+    - 'metadata.rb'
+    - 'spec/**/*'
+    - 'test/**/*'
+
+Encoding:
+  Enabled: false
+
+LineLength:
+  Max: 120
+
+SpaceBeforeFirstArg:
+  Enabled: false
+
+SpaceAroundOperators:
+  Enabled: false
+
+ExtraSpacing:
+  Enabled: false

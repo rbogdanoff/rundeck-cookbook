@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+  require_chef_omnibus: 12.12
+  customize:
+    memory: 1048
+
+platforms:
+  - name: ubuntu-14.04
+    driver: vagrant
+
+  - name: centos-7.1
+    driver: vagrant
+
+suites:
+  - name: default
+    run_list:
+      - recipe[rundeck::default]
+
