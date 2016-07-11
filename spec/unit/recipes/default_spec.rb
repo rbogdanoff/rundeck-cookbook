@@ -28,10 +28,14 @@ describe 'rundeck::default'  do
     it 'includes the java recipe' do
        expect(chef_run).to include_recipe('java::default')
     end
-  
+    
+    it 'has the correct default val for the rundeck download url' do
+      expect(chef_run.node['rundeck']['downloadurl']).to eq('http://dl.bintray.com/rundeck/rundeck-deb/rundeck-2.6.8-1-GA.deb')
+    end
+
     it 'downloads the rundeck distro' do
       expect(chef_run).to create_remote_file('rundeck_distro')
-        .with(source: 'http://dl.bintray.com/rundeck/rundeck-deb/rundeck-2.6.8-1-GA.deb')
+        .with(source: chef_run.node['rundeck']['downloadurl'])
     end
   
     it 'installs the rundeck package' do
@@ -64,15 +68,22 @@ describe 'rundeck::default'  do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '7.0')
         .converge(described_recipe)
     end
-  
+
+    it 'has the correct default val for the rundeck download url' do
+      expect(chef_run.node['rundeck']['downloadurl']).to eq('http://dl.bintray.com/rundeck/rundeck-rpm/rundeck-2.6.8-1.20.GA.noarch.rpm')
+    end
+    it 'has the correct default val for the rundeck rhel config download url' do
+      expect(chef_run.node['rundeck']['downloadurl_config']).to eq('http://dl.bintray.com/rundeck/rundeck-rpm/rundeck-config-2.6.8-1.20.GA.noarch.rpm')
+    end
+
     it 'downloads the rundeck config distro' do
       expect(chef_run).to create_remote_file('rundeck_distro_config')
-        .with(source: 'http://dl.bintray.com/rundeck/rundeck-rpm/rundeck-config-2.6.8-1.20.GA.noarch.rpm')
+        .with(source: chef_run.node['rundeck']['downloadurl_config'])
     end
 
     it 'downloads the rundeck distro' do
       expect(chef_run).to create_remote_file('rundeck_distro')
-        .with(source: 'http://dl.bintray.com/rundeck/rundeck-rpm/rundeck-2.6.8-1.20.GA.noarch.rpm')
+         .with(source: chef_run.node['rundeck']['downloadurl'])
     end
 
     it 'installs the rundeck config package' do
